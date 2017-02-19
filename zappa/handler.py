@@ -430,8 +430,6 @@ class LambdaHandler(object):
                     script_name=script_name,
                     trailing_slash=self.trailing_slash
                 )
-                print(environ)
-                print(event)
 
                 # We are always on https on Lambda, so tell our wsgi app that.
                 environ['HTTPS'] = 'on'
@@ -453,9 +451,12 @@ class LambdaHandler(object):
                 for key, value in response.headers:
                     zappa_returndict['headers'][key] = value
 
+                print("environ", environ)
+                print("event", event)
+                print("response", response)
+                print("response.mimetype", response.mimetype)
+                print("returndict", zappa_returndict)
                 if settings.BINARY_SUPPORT:
-                    print(response)
-                    print(zappa_returndict)
                     if not response.mimetype.startswith("text/") or response.mimetype != "application/json" or response.mimetype != "application/x-www-form-urlencoded":
                         try:
                             zappa_returndict['body'] = base64.b64encode(zappa_returndict['body'])
