@@ -430,6 +430,8 @@ class LambdaHandler(object):
                     script_name=script_name,
                     trailing_slash=self.trailing_slash
                 )
+                print(environ)
+                print(event)
 
                 # We are always on https on Lambda, so tell our wsgi app that.
                 environ['HTTPS'] = 'on'
@@ -457,9 +459,9 @@ class LambdaHandler(object):
                     if not response.mimetype.startswith("text/") or response.mimetype != "application/json" or response.mimetype != "application/x-www-form-urlencoded":
                         try:
                             zappa_returndict['body'] = base64.b64encode(zappa_returndict['body'])
+                            zappa_returndict["isBase64Encoded"] = "true"
                         except KeyError:
                             pass
-                        zappa_returndict["isBase64Encoded"] = "true"
 
                 # Calculate the total response time,
                 # and log it in the Common Log format.
