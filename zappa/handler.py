@@ -454,7 +454,7 @@ class LambdaHandler(object):
                 if settings.BINARY_SUPPORT:
                     print(response)
                     print(zappa_returndict)
-                    if not response.mimetype.startswith("text/") or response.mimetype != "application/json":
+                    if not response.mimetype.startswith("text/") or response.mimetype != "application/json" or response.mimetype != "application/x-www-form-urlencoded":
                         try:
                             zappa_returndict['body'] = base64.b64encode(zappa_returndict['body'])
                         except KeyError:
